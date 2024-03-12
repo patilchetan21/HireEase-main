@@ -1,0 +1,84 @@
+
+{% extends 'recruiter_templates/baserec.html' %}
+
+{% load static %}
+{% block title %}Recruiter Dashboard{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Resumes Uploaded</h5>
+                        <p class="card-text">Total: {{ resume_count }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Job Opportunities</h5>
+                        <p class="card-text">Explore available jobs.</p>
+                        <a href="{% url 'all_jobs' %}" class="btn btn-primary">Explore Jobs</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Candidates Details</h5>
+                        <p class="card-text">See Status of Resumes.</p>
+                        <a href="{% url 'candidates_per_job' %}" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card" style="height: 400px; width:600px"> 
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <h5 class="card-title">Resume Status</h5>
+                        <canvas id="resumeStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    
+    <script src="{% static 'chart.js' %}"></script>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var pendingCount = {{ pending_count }};
+                    var completedCount = {{ completed_count }};
+        
+                    var ctx = document.getElementById("resumeStatusChart").getContext("2d");
+                    var myChart = new Chart(ctx, {
+                        type: "doughnut",
+                        data: {
+                            labels: ["Pending", "Completed"],
+                            datasets: [
+                                {
+                                    data: [pendingCount, completedCount],
+                                    backgroundColor: ["#FF6384", "#36A2EB"],
+                                    hoverBackgroundColor: ["#FF6384", "#36A2EB"],
+                                },
+                            ],
+                        },
+                    });
+                });
+            </script>
+{% endblock %}

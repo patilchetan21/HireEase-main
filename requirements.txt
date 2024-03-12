@@ -1,0 +1,8 @@
+Django
+spacy
+pypdf
+mysqlclient
+keras
+tensorflow
+regex
+nltk

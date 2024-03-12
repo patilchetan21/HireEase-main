@@ -1,0 +1,73 @@
+{% extends 'company_templates/baseComp.html' %}
+
+{% block title %}Update Job Post{% endblock %}
+
+{% block styles %}
+<style>
+    .card {
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+        border-radius: 8px;
+    }
+    .container{
+        margin-top:6%;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+    <h1>Job Post</h1>
+    <div class="card">
+        <div class="card-body">
+            <h3>Update Job Post</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ job_post.title }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description" rows="3" required>{{ job_post.description }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" value="{{ job_post.location }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Salary</label>
+                    <input type="text" class="form-control" id="salary" name="salary" value="{{ job_post.salary }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="skills_required" class="form-label">Skills Required</label>
+                    <input type="text" class="form-control" id="skills_required" name="skills_required" value="{{ job_post.skills_required }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="eligibility_criteria" class="form-label">Eligibility Criteria</label>
+                    <input type="text" class="form-control" id="eligibility_criteria" name="eligibility_criteria" value="{{ job_post.eligibility_criteria }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="number_of_openings" class="form-label">Number of openings</label>
+                    <input type="Number" class="form-control" id="number_of_openings" name="number_of_openings" value="{{ job_post.number_of_openings }}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Post</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.min.js"></script>
+{% endblock %}

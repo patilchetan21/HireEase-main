@@ -1,0 +1,74 @@
+{% extends 'recruiter_templates/baserec.html' %}
+
+{% block title %}Candidates per job post{% endblock %}
+
+{% block styles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table {
+            margin-top: 30px;
+        }
+        .table th {
+            background-color: #695CFE;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            text-align: center;
+            padding: 10px;
+        }
+        .table td {
+            font-size: 16px;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding: 10px;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+          }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        {% if shortlisted|length > 0%}
+        
+        <h1>Resume Scores Per Job Post</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Resume Name</th>
+                    <th>For Job</th>
+                    <th>By Company</th>
+                    <th>Resume Score</th>
+                    <th>Details</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resume in shortlisted %}
+                <tr>
+                    <td>{{ resume.resume_id.name }}</td>
+                    <td>{{ resume.job_post.title }}</td>
+                    <td>{{ resume.job_post.posted_by.name }}</td>
+                    <td>{{ resume.resume_score }}</td>
+                    <td> <a href="{%url 'job_detail' resume.job_post.id%}">Link</a></td>
+                    <td>{{ resume.Status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h3 class="alert alert-warning" style="animation: pulse 2s infinite;">No Data Here</h3>
+        {% endif %}
+    </div>
+{% endblock %}

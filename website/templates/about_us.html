@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block styles %}
+<style>
+  .jumbotron {
+    background-color: #F8F9FA;
+  }
+
+  .about-img {
+    height: 500px;
+    background-image: url('https://images.unsplash.com/photo-1527413114093-0b2b90fa6d1a');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <div class="row">
+      
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>About Us</h1>
+          </div>
+          <div class="col-md-6">
+            <p class="lead">
+              Welcome to our platform, where we bridge the gap between Enterprises and Recruiters. We have developed an innovative platform that allows companies to post their job openings and recruiters to provide resumes of top-quality candidates. Our platform uses advanced NLP techniques to match the skills of job seekers with the requirements of job openings. Our goal is to help companies find the most suitable candidates for their job openings quickly and efficiently, and to help job seekers find their dream job.
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p class="lead">
+              We understand the challenges faced by both Enterprises and Recruiters in today's competitive market and are committed to finding innovative solutions that address these challenges. Our platform is user-friendly, secure, and efficient, making it easy for job seekers to find relevant job openings and for employers to find top-quality candidates.
+            </p>
+            <p class="lead">
+              Thank you for choosing our platform. 
+            </p>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+{% endblock %}

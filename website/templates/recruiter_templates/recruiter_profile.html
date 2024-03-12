@@ -1,0 +1,74 @@
+{% extends 'recruiter_templates/baserec.html' %}
+
+{% block title %}Recruiter Profile{% endblock %}
+
+{% block styles %}
+  <style>
+    .card {
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    }
+    .container{
+      margin-top:6%;
+    }
+    .form-control:focus {
+      border-color: #4D6B8F;
+      box-shadow: 0 0 0 0.25rem rgba(77, 107, 143, 0.25);
+    }
+    .btn-primary {
+      background-color: #4D6B8F;
+      border-color: #4D6B8F;
+    }
+    .btn-primary:hover {
+      background-color: #2D475E;
+      border-color: #2D475E;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 style="background-color: #F2F2F2; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2); margin-bottom: 4%;">Recruiter Profile</h1>
+
+
+    <div class="card">
+      <div class="card-body">
+        <p><strong>Name:</strong> {{ recruiter.name }}</p>
+        <p><strong>Email:</strong> {{ recruiter.email }}</p>
+        <p><strong>Phone Number:</strong> {{ recruiter.phone_number }}</p>
+      </div>
+    </div>
+
+    
+
+    <div class="card">
+      <div class="card-body">
+        <h3 style="background-color: #fffb79; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2); margin-bottom: 4%;">Update Profile</h3>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ recruiter.name }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="location" class="form-label">Email</label>
+            <input type="text" class="form-control" id="email" name="email" value="{{ recruiter.email }}" required>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Phone Number</label>
+            <textarea class="form-control" id="phone_number" name="phone_number" rows="3" required>{{ recruiter.phone_number }}</textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.1/js/bootstrap.min.js"></script>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'recruiter_templates/baserec.html' %}
+
+{% block title %}Job Detail{% endblock %}
+
+{% block styles %}
+
+<style>
+    .loader-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+    
+    .loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        border: 6px solid #fff;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        margin-top: 80px; /* Adjust the margin-top value as needed */
+        width: 100%;
+    }
+    
+    .loader-container.show {
+        display: block;
+    }
+    
+    .loader-container.show .loading-text {
+        display: block;
+    }
+    
+    @keyframes spin {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
+</style>
+
+
+{% endblock %}
+
+{% block content %}
+
+<div id="loader-container" class="loader-container">
+    <div class="loader"></div>
+    <div class="loading-text">
+        Processing your resumes...<br>
+        Extracting skills...
+    </div>
+</div>
+
+<div class="container mt-4 mb-4">
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="font-weight-bold">{{ job.title }}</h1>
+                    <p class="text-muted">Posted by <strong>{{ job.posted_by.name }}</strong> on {{ job.date_posted|date }}</p>
+                </div>
+                
+                <div class="col-md-4 text-right">
+                  
+                
+                    <form method="post" action="{% url 'send_resumes' job.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" onclick="showLoader()">Send Resumes</button>
+                    </form>
+                
+
+              </div>
+
+              
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="font-weight-bold">Job Description</h5>
+                    <p class="card-text">{{ job.description|linebreaks }}</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Job Details</div>
+                        <div class="card-body">
+                            <p class="card-text"><strong>Location:</strong> {{ job.location }}</p>
+                            <p class="card-text"><strong>Salary:</strong> {{ job.salary }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="font-weight-bold">Eligibility Criteria</h5>
+                    <p class="card-text">{{ job.eligibility_criteria|linebreaks }}</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light mb-3">
+                        <div class="card-header">Skills Required</div>
+                        <div class="card-body">
+                            <p class="card-text">{{ job.skills_required|linebreaks }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function showLoader() {
+        var loaderContainer = document.getElementById('loader-container');
+        loaderContainer.classList.add('show');
+        
+        // Simulating delay to demonstrate the loader
+        setTimeout(function() {
+            loaderContainer.classList.remove('show');
+        }, 10000); // Adjust the delay time (in milliseconds) as needed
+    }
+</script>
+
+{% endblock %}

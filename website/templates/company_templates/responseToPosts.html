@@ -1,0 +1,208 @@
+{% extends 'company_templates/baseComp.html' %}
+
+{% block title %}Response to Posts{% endblock %}
+
+{% block styles %}
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Add your custom styles here -->
+  <style>
+
+    body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 25%;
+  right: 35%;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  width: 500px;
+  padding: 5%;
+  background-color: rgb(176, 254, 241);
+  /* background-color: rgb(151, 195, 253); */
+  border: 4px solid black;
+  border-radius: 4%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+    .resume-card {
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+      padding: 20px;
+    }
+
+    .resume-card h4 {
+      margin-top: 0;
+    }
+
+    .resume-card p {
+      margin-bottom: 0;
+    }
+
+    .resume-card .resume-details {
+      margin-top: 10px;
+    }
+
+    @keyframes pulse {
+      0% {
+          opacity: 1;
+      }
+      50% {
+          opacity: 0.5;
+      }
+      100% {
+          opacity: 1;
+      }
+    }
+
+    .blur {
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    
+  </style>
+{% endblock %}
+
+{% block content %}
+
+
+
+  <div class="container mt-4">
+
+    {% for message in messages %}
+		<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+			<strong></strong>{{ message }}
+				<span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+		</div>
+		{% endfor %}
+
+  
+    <h1 id="TOP_HEADING">Response to "{{ job_post.title }}"</h1>
+    <div class="row mt-4">
+      {% for shortlisted_resume in shortlisted_resumes %}
+        <div class="col-md-6">
+          <div class="card resume-card">
+            <div class="card-body">
+              <h4 class="card-title">{{ shortlisted_resume.resume_id.name }}</h4>
+              {% if shortlisted_resume.phone_number %}
+                  <p class="card-text">Phone: {{ shortlisted_resume.phone_number }}</p>
+              {% endif %}
+              {% if shortlisted_resume.email %}
+                  <p class="card-text">Email: {{ shortlisted_resume.email }}</p>
+              {% endif %}
+              <div class="resume-details">
+                  <p>Score: {{ shortlisted_resume.resume_score }}</p>
+              </div>
+              <br/>
+              <div class="text-right">
+                <a onclick="openForm('{{ shortlisted_resume.email}}')" class="btn btn-warning " >Schedule interview</a>
+
+                <a href="{% url 'download_resume' filename=shortlisted_resume.resume_id.name %}" class="btn btn-primary " >Download Resume</a>
+                
+
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+        {% comment %} schedular form  {% endcomment %}
+        <div class="form-popup" id="myForm">
+      
+            <form action="" method="POST"  class="form-container">
+              {% csrf_token %}
+            <h1 style="font-size:30px;">Schedule Interview</h1>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Interviewer Person :</label>
+            <input type="text" class="form-control" name="Iname" placeholder="Enter HR Name" required>
+          </div>
+
+          <div class="form-group">
+            <input type="hidden" class="form-control" name="email" id="formHeading">
+          </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="exampleInputPassword1">Date:</label>
+                  <input type="date" name="date" class="form-control" required min="{% now 'Y-m-d' %}">
+                </div>
+                
+                <div class="col-md-6">
+                  <label for="exampleInputPassword1">Time :</label>
+                  <input type="time" name="time" class="form-control" required>
+                </div>
+                         
+                
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Details About Interview :</label>
+              <textarea type="text" name="description" class="form-control" value="" placeholder="Enter Futher Details"></textarea>
+            </div>
+            <input type="hidden" id="hiddenField" name="email" value="SomeValue">
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-success" onclick="closeForm()">Close</button>
+          </form>
+        </div>
+        
+      {% endfor %}
+    </div>
+
+    {% if shortlisted_resumes|length == 0 %}
+      <h3 class="alert alert-warning" style="animation: pulse 2s infinite;">No Data Here</h3>
+    {% endif %}
+
+
+  </div>
+
+  <script>
+    
+    function openForm(id) {
+      document.getElementById("hiddenField").value = id;
+      document.getElementById("formHeading").innerText = id;
+      var parentElement = document.querySelector("div.row.mt-4");
+      var elementsToBlur = Array.from(parentElement.children).filter(function(child) {
+        return child.id !== "myForm";
+      });
+      for (var i = 0; i < elementsToBlur.length; i++) {
+        elementsToBlur[i].classList.add("blur");
+      }
+      document.getElementById("myForm").style.display = "block";
+      document.getElementById("TOP_HEADING").classList.add("blur");
+    }
+    
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+      var parentElement = document.querySelector("div.row.mt-4");
+      var elementsToBlur = Array.from(parentElement.children).filter(function(child) {
+        return child.id !== "myForm";
+      });
+      for (var i = 0; i < elementsToBlur.length; i++) {
+        elementsToBlur[i].classList.remove("blur"); 
+      }
+      document.getElementById("TOP_HEADING").classList.remove("blur");
+    }
+    
+    
+    
+
+    
+    </script>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

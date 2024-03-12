@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Website{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            font-size: 16px;
+            color: #333;
+            background-color: #f8f8f8;
+            margin-top: 10px;
+        }
+        
+        .navbar {
+            border-radius: 0;
+            background-color: #fff;
+            box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+            border-bottom: 1px solid #e7e7e7;
+        }
+        
+        .navbar-default .navbar-brand {
+            color: #333;
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .navbar-default .navbar-nav > li > a {
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        .navbar-default .navbar-nav > li > a:hover,
+        .navbar-default .navbar-nav > li > a:focus,
+        .navbar-default .navbar-nav > li > a.active {
+            color: #555;
+            background-color: transparent;
+            border-bottom: 4px solid #555;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+        
+        .container {
+            max-width: 800px;
+        }
+        
+        .footer {
+            background-color: #222;
+            color: #fff;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            margin-top: 20px;
+        }
+        
+        .footer h3 {
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .footer ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .footer ul li {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        
+        .footer ul li a {
+            color: #fff;
+        }
+        
+        .footer ul li a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+
+    {% block styles %}{% endblock %}
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">HireEase</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about_us' %}">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+        {% block content %}
+        {% endblock %}
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li style="text-align: left;">Email: pccshireease@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>

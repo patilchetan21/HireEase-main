@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Next Round Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #888888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Greetings!</h1>
+        
+        <p>Congratulations! You have qualified for the next round.</p>
+        
+        <h2>Next Round Details:</h2>
+        <p>Date: {{ context_variable.date }}</p>
+        <p>Time: {{ context_variable.time }}</p>
+        <p>Description: {{ context_variable.description }}</p>
+        
+        <p>We look forward to seeing you at the next round.</p>
+        
+        <div class="footer">
+            <p>Best regards,</p>
+            <p>{{ context_variable.comp_name }}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Landing{% endblock %}
+
+{% block styles %}
+<style>
+    .register-container {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .register-left,
+    .register-right {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 5%;
+    }
+
+    .register-left {
+        /* background-color: #007bff; */
+        background-color: #1b77d9;
+        color: #fff;
+    }
+
+    .register-right {
+        background-color: #f0f0f0;
+    }
+
+    .register-heading {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    .register-button {
+        background-color: #fff;
+        color: #007bff;
+        border: 2px solid #007bff;
+        border-radius: 30px;
+        padding: 10px 30px;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .register-button:hover {
+        background-color: rgb(221, 60, 60);
+        color: #fff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <div class="register-left">
+        <h1 class="register-heading">Register as Enterprise</h1>
+        <p>Start posting jobs and provide opportunities.</p>
+        <a href="{% url 'company_reg' %}" class="register-button">Continue as Enterprise</a>
+        <br><br>
+        <p>Already registered? <a  style="color: black;" href="{% url 'company_log' %}"">Log in</a></p>
+    </div>
+    <div class="register-right">
+        <h1 class="register-heading">Register as Recruiter</h1>
+        <p>Provide Resumes and get candidates hired</p>
+        <a href="{% url 'recruiter_reg' %}" class="register-button">Continue as Recruiter</a>
+        <br><br>
+        <p>Already registered? <a href="{% url 'recruiter_log' %}">Log in</a></p>
+    </div>
+</div>
+{% endblock %}
